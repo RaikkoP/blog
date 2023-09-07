@@ -48,6 +48,17 @@ app.get('/', (req, res) => {
     })
 });
 
+app.get('/article/:slug', (req, res) => {
+    let sql = `SELECT * FROM article WHERE slug = "${req.params.slug}"`
+    let article
+    db.query(sql, (err, data) => {
+        if (err) throw err;
+        article = data;
+        console.log(article);
+        res.render('article', { article: article });
+    })
+})
+
 
 app.listen(3000, () => {
     console.log('listening on port 3000');
