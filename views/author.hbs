@@ -1,0 +1,17 @@
+<div>
+    {{#articles}}
+    <h2>Looking at posts by: {{name}}</h2>
+    {{/articles}}
+</div>
+<div class="article-list">
+    {{#articles}}
+    <article>
+        <a href="/article/{{slug}}">
+        <img src="/images/{{image}}" alt="">
+        </a>
+        <h2>
+        <a href="/article/{{slug}}">{{title}}</a>
+        </h2>
+    </article>
+    {{/articles}}
+</div>
