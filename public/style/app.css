@@ -27,6 +27,11 @@
     padding: 12px;
 }
 
+img {
+    height: 250px;
+    width: 400px;
+}
+
 body {
     background-color: #eee;
     font-family: 'Noto Sans', sans-serif;
