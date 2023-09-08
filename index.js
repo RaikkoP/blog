@@ -28,21 +28,12 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 
 const articleRoutes = require('./routes/article');
+const userRoutes = require('./routes/author');
 
 app.use('/', articleRoutes);
 app.use('/article', articleRoutes);
+app.use('/author', userRoutes);
 
-app.get('/author/:name', (req, res) => {
-    let sql = `SELECT article.name as title, article.slug, article.image, article.published, author.name FROM article LEFT JOIN author ON article.author_id = author.id WHERE author.name = "${req.params.name}"`
-    let articles = [];
-    db.query(sql, (err, data) => {
-        if (err) throw err;
-        articles = data;
-        res.render('author', { 
-            articles: articles 
-        });
-    })
-})
 
 
 app.listen(3000, () => {
