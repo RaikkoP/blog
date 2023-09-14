@@ -1,14 +1,17 @@
-const db = require('../utils/db');
+const Article = require("../models/article.model");
 
 const getAllArticles = (req, res) => {
-    const sql = "SELECT * FROM article";
-    let articles = [];
-    db.query(sql, (err, data) => {
-        if (err) throw err;
-        articles = data;
-        res.render('index', { 
-            articles: articles 
-        });
+    Article.getAll((err, data) => {
+        if (err) {
+            res.status(500).send({
+                message: err.message || "Some error occured retrieving articles data"
+            })
+        } else {
+            console.log(data);
+            res.render("index", {
+                articles: data
+            });
+        }
     })
 };
 

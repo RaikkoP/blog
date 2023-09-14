@@ -5,9 +5,13 @@ const getUserPosts = (req, res) => {
     let articles = [];
     db.query(sql, (err, data) => {
         if (err) throw err;
+        console.log(data);
         articles = data;
+        author = data[0].name;
+        console.log(data[0].name)
         res.render('author', { 
-            articles: articles 
+            articles: articles, 
+            author: author
         });
     })
 };
