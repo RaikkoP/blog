@@ -16,15 +16,20 @@ const getAllArticles = (req, res) => {
 };
 
 const getArticleBySlug = (req, res) => {
-    let sql = `SELECT article.name as title, article.slug, article.image, article.body, article.published, author.name FROM article LEFT JOIN author ON article.author_id = author.id WHERE article.slug = "${req.params.slug}" `
-    let article
-    db.query(sql, (err, data) => {
-        if (err) throw err;
-        article = data;
-        console.log(article);
-        res.render('article', { article: article });
-    })
+    Article.getBySlug(req.params.slug, (err, data) => {
+        if (err) {
+            res.status(500).send({
+                message: err.message || "Some error occured retrieving articles"
+            });
+        } else {
+            console.log(data);
+            res.render("article", {
+                article: data
+            })
+        }
+    });
 };
+
 
 module.exports = {
     getAllArticles,

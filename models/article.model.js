@@ -13,9 +13,9 @@ const Article = (article) => {
 
 //Get all articles
 Article.getAll = (result) => {
-    let query = "SELECT * FROM article";
+    let sql = "SELECT * FROM article";
     let articles =  [];
-    db.query(query, (err, res) => {
+    db.query(sql, (err, res) => {
         if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -27,5 +27,20 @@ Article.getAll = (result) => {
         result(null, articles);
     })
 };
+
+Article.getBySlug = (slug, result) => {
+    let sql = `SELECT article.name as title, article.slug, article.image, article.body, article.published, author.name FROM article LEFT JOIN author ON article.author_id = author.id WHERE article.slug = "${slug}" `
+    db.query(sql, (err, data) => {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        }
+        if (data.length){
+            console.log("Found article: ", data[0]);
+            result(null, data[0]);
+        }
+    })
+}
 
 module.exports = Article;

@@ -1,19 +1,20 @@
-const db = require('../utils/db');
+const Author = require("../models/author.model");
 
 const getUserPosts = (req, res) => {
-    let sql = `SELECT article.name as title, article.slug, article.image, article.published, author.name FROM article LEFT JOIN author ON article.author_id = author.id WHERE author.name = "${req.params.name}"`
-    let articles = [];
-    db.query(sql, (err, data) => {
-        if (err) throw err;
-        console.log(data);
-        articles = data;
-        author = data[0].name;
-        console.log(data[0].name)
-        res.render('author', { 
-            articles: articles, 
-            author: author
-        });
-    })
+    Author.getUserPosts(req.params.name, (err, data) => {
+        if (err) {
+            res.status(500).send({
+                message: err.message
+            });
+        } else {
+            console.log(data);
+            res.render("author", {
+                author: data[0].name,
+                articles: data
+            });
+        }
+
+    });
 };
 
 module.exports = {
