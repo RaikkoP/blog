@@ -3,6 +3,7 @@ const db = require('../utils/db');
 
 //constructor
 const Article = function(article){
+    this.id = article.id;
     this.name = article.name;
     this.slug = article.slug;
     this.image = article.image;
@@ -61,6 +62,58 @@ Article.createNew = (newArticle, result) => {
         {id: res.insertId, ...newArticle});
         result(null, { id: res.insertId, ...newArticle});
     });
+}
+
+Article.getPost = (id, result) => {
+    let query = `SELECT * FROM article WHERE id = "${id}"`
+    let article;
+    db.query(query, (err, res) => {
+        if(err) {
+            console.log("error: ", err);
+            result(err, null); 
+            return;
+        }
+        article = res;
+        console.log("article: ", article);
+        result(null, article);
+    });
+}
+
+Article.updatePost = (newValues, result) => {
+    let query = `UPDATE article SET
+    name = "${newValues.name}",
+    slug = "${newValues.slug}",
+    image = "${newValues.image}",
+    body = "${newValues.body}",
+    published = "${newValues.published}",
+    author_id = "${newValues.author_id}"
+    WHERE id = ${newValues.id}`
+    db.query(query, (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        }
+        console.log("updated article: ",
+        {id: res.insertId, ...newValues});
+        result(null, {id: res.insertId, ...newValues});
+    })
+}
+
+Article.deletePost = (id, result) => {
+    console.log(id);
+    let query = `DELETE FROM article
+    WHERE id = "${id}"`
+    db.query(query, (err, res) => {
+        if(err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+        }
+        console.log("deleted article: ",
+        {id: res.insertId, ...id});
+        result(null, {id: res.insertId, ...id});
+    })
 }
 
 module.exports = Article;

@@ -55,13 +55,74 @@ const createNewArticle = (req, res) => {
     })
 };
 
+const updateArticle = (req, res) => {
+
+    const newValues = new Article({
+        id: req.body.id,
+        name: req.body.name,
+        published: req.body.published,
+        slug: req.body.slug,
+        image:req.body.image,
+        body: req.body.body,
+        author_id: req.body.author_id
+    });
+
+    console.log(newValues);
+
+    Article.updatePost(newValues, (err, data) => {
+        if (err) {
+            res.status(500).send({
+                message: err.message || "Some error occured updating"
+            })
+        } else {
+            console.log(data);
+            res.redirect('/');
+        }
+    });
+};
+
+const deleteArticle = (req, res) => {
+    
+
+    Article.deletePost(req.params.id, (err, data) => {
+        if(err) {
+            res.status(500).sind({
+                message: err.messasge || "Failed to delete post"
+            })
+        } else {
+            console.log(data);
+            res.redirect('/');
+        }
+    })
+}
+
 const articleForm = (req, res) => {
     res.render("form")
 };
+
+const getArticleByID = (req, res) => {
+    console.log('update article');
+
+    Article.getPost(req.params.id, (err, data) => {
+        if(err){
+            res.status(500).send({
+                message: err.message || "Didn't find post"
+            });
+        } else {
+            console.log(data);
+            res.render("editForm", {
+                article: data
+            })
+        }
+    });
+}
 
 module.exports = {
     getAllArticles,
     getArticleBySlug,
     createNewArticle,
     articleForm,
+    getArticleByID,
+    updateArticle,
+    deleteArticle
 };
