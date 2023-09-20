@@ -24,7 +24,6 @@ Article.getAll = (result) => {
         }
 
         articles = res;
-        console.log("articles: ", articles);
         result(null, articles);
     })
 };
@@ -38,7 +37,6 @@ Article.getBySlug = (slug, result) => {
             return;
         }
         if (data.length){
-            console.log("Found article: ", data[0]);
             result(null, data[0]);
         }
     })
@@ -74,7 +72,6 @@ Article.getPost = (id, result) => {
             return;
         }
         article = res;
-        console.log("article: ", article);
         result(null, article);
     });
 }

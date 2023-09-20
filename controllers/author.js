@@ -6,11 +6,15 @@ const getUserPosts = (req, res) => {
             res.status(500).send({
                 message: err.message
             });
-        } else {
+        } else if(data.length > 0){
             console.log(data);
             res.render("author", {
                 author: data[0].name,
                 articles: data
+            });
+        } else {
+            res.render("author", {
+                error: "User not found"
             });
         }
 

@@ -7,7 +7,6 @@ const getAllArticles = (req, res) => {
                 message: err.message || "Some error occured retrieving articles data"
             })
         } else {
-            console.log(data);
             res.render("index", {
                 articles: data
             });
@@ -22,7 +21,6 @@ const getArticleBySlug = (req, res) => {
                 message: err.message || "Some error occured retrieving articles"
             });
         } else {
-            console.log(data);
             res.render("article", {
                 article: data
             })
@@ -49,7 +47,6 @@ const createNewArticle = (req, res) => {
                 message: err.message || "Some error occured sending article data"
             })
         } else {
-            console.log(data)
             res.redirect('/')
         }
     })
@@ -67,15 +64,12 @@ const updateArticle = (req, res) => {
         author_id: req.body.author_id
     });
 
-    console.log(newValues);
-
     Article.updatePost(newValues, (err, data) => {
         if (err) {
             res.status(500).send({
                 message: err.message || "Some error occured updating"
             })
         } else {
-            console.log(data);
             res.redirect('/');
         }
     });
@@ -90,7 +84,6 @@ const deleteArticle = (req, res) => {
                 message: err.messasge || "Failed to delete post"
             })
         } else {
-            console.log(data);
             res.redirect('/');
         }
     })
@@ -109,7 +102,6 @@ const getArticleByID = (req, res) => {
                 message: err.message || "Didn't find post"
             });
         } else {
-            console.log(data);
             res.render("editForm", {
                 article: data
             })
