@@ -1,5 +1,6 @@
 //db connection
 const db = require('../utils/db');
+const bcrypt = require('bcryptjs');
 
 //constructor
 const User = function(user){
@@ -11,7 +12,7 @@ const User = function(user){
 User.createNew = (newUser, result) => {
     let query = `INSERT INTO users SET
     username = "${newUser.username}",
-    password = "${newUser.password}"`
+    password = "${bcrypt.hashSync(newUser.password, bcrypt.genSaltSync(10))}"`
     if(newUser.password == newUser.cPassword) {
         db.query(query, (err, res) => {
             if (err) {

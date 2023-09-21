@@ -1,19 +1,5 @@
 const Article = require("../models/article.model");
 
-const getAllArticles = (req, res) => {
-    Article.getAll((err, data) => {
-        if (err) {
-            res.status(500).send({
-                message: err.message || "Some error occured retrieving articles data"
-            })
-        } else {
-            res.render("index", {
-                articles: data
-            });
-        }
-    })
-};
-
 const getArticleBySlug = (req, res) => {
     Article.getBySlug(req.params.slug, (err, data) => {
         if (err) {
@@ -101,16 +87,34 @@ const getArticleByID = (req, res) => {
             res.status(500).send({
                 message: err.message || "Didn't find post"
             });
-        } else {
+        } else if (data.length > 0) {
             res.render("editForm", {
                 article: data
             })
+        } else {
+            res.redirect("/");
         }
     });
 }
 
 module.exports = {
-    getAllArticles,
+    getAllArticles: async (req, res) => {
+        if(req.session.authenticated){
+            Article.getAll((err, data) => {
+                if (err) {
+                    res.status(500).send({
+                        message: err.message || "Some error occured retrieving articles data"
+                    })
+                } else {
+                    res.render("index", {
+                        articles: data
+                    });
+                }
+            })
+        } else {
+            res.redirect('/login')
+        }
+    },
     getArticleBySlug,
     createNewArticle,
     articleForm,
