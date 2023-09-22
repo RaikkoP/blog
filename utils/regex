@@ -1,0 +1,6 @@
+require("dotenv").config;
+
+module.exports = {
+    userRegEx :  new RegExp(process.env.USER_REGEX),
+    passwordRegEx : new RegExp(process.env.PASSWORD_REGEX)
+}

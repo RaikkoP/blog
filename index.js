@@ -43,14 +43,12 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 const articleRoutes = require('./routes/article');
 const userRoutes = require('./routes/author');
-const registerRoutes = require('./routes/register');
 const loginRoutes = require('./routes/login');
 
-app.use('/', articleRoutes);
-app.use('/article', articleRoutes);
+app.use('/dashboard', articleRoutes);
 app.use('/author', userRoutes);
-app.use('/register', registerRoutes);
-app.use('/login', loginRoutes);
+app.use('/', loginRoutes);
+
 
 
 
