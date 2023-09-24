@@ -45,7 +45,7 @@ const articleRoutes = require('./routes/article');
 const userRoutes = require('./routes/author');
 const loginRoutes = require('./routes/login');
 
-app.use('/dashboard', articleRoutes);
+app.use('/', articleRoutes);
 app.use('/author', userRoutes);
 app.use('/', loginRoutes);
 
