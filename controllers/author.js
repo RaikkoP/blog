@@ -1,4 +1,4 @@
-const Author = require("../models/author.model");
+const Author = require("../models/author");
 
 const getUserPosts = (req, res) => {
     Author.getUserPosts(req.params.name, (err, data) => {

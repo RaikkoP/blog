@@ -15,9 +15,15 @@ app.engine('hbs', hbs.engine({
     extname: 'hbs',
     defaultLayout: 'main',
     layoutsDir: __dirname + '/views/layouts/',
-    }))
+    partialsDir : [
+        path.join(__dirname, 'views'),
+    ],
+
+    }));
+
 //setup static public directory
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
 
 //session id signature
 app.use(session({
@@ -44,10 +50,11 @@ app.use(bodyParser.urlencoded({extended: true}));
 const articleRoutes = require('./routes/article');
 const userRoutes = require('./routes/author');
 const loginRoutes = require('./routes/login');
+const adminRoutes = require('./routes/admin');
 
 app.use('/', articleRoutes);
 app.use('/author', userRoutes);
-app.use('/', loginRoutes);
+app.use('/admin', loginRoutes);
 
 
 

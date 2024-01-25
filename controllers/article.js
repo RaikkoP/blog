@@ -1,4 +1,4 @@
-const Article = require("../models/article.model");
+const Article = require("../models/article");
 
 module.exports = {
   getAllArticles: async (req, res) => {
@@ -12,6 +12,7 @@ module.exports = {
         } else {
           res.render("index", {
             articles: data,
+            count: req.params.count
           });
         }
       });
